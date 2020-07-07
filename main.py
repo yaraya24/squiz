@@ -25,7 +25,7 @@ cprint("Please wait while we build your quiz....", main_color)
 raw_questions = Quiz.get_questions(categories[category_name])
 
 if len(raw_questions) == 0:
-    cprint("Sorry but we couldn't find any questions to build your quiz", "red")
+    cprint("Sorry but we couldn't find any questions to build your quiz", main_color)
     exit()
 
 quiz.add_raw_questions(raw_questions)
@@ -45,7 +45,7 @@ for quiz_question in quiz.questions:
         cprint("Correct!", "green")
         quiz.score += 1
     else:
-        cprint("Sorry that wasn't right", "red")
+        cprint("Sorry that wasn't right", main_color)
 
-cprint("That's the end of the quiz", "red")
+cprint("That's the end of the quiz", main_color)
 cprint(f"You scored a {quiz.score} out of {len(quiz.questions)}")
