@@ -26,8 +26,8 @@ class Quiz():
         for question in questions:
             question["question"] = unescape(question["question"])
             question["correct_answer"] = unescape(question["correct_answer"])
-            for option in question["incorrect_answers"]:
-                option = unescape(option)
+            for index, option in enumerate(question["incorrect_answers"]):
+                question["incorrect_answers"][index] = unescape(option)
     
     def __init__(self) -> None:
         self.questions: list = []
