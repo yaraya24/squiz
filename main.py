@@ -1,5 +1,5 @@
 from termcolor import cprint
-import inquirer
+import inquirer # type: ignore
 from Quiz import Quiz
 
 quiz = Quiz()

@@ -21,8 +21,8 @@ class Quiz():
             return []
     
     def __init__(self) -> None:
-        self.questions = []
-        self.score = 0
+        self.questions: list = []
+        self.score: int = 0
 
     def add_raw_questions(self, raw_questions: list) -> None:
         for raw_question in raw_questions:
