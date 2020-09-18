@@ -32,7 +32,7 @@ jobs:
           host: 54.204.119.138
           username: github-actions
           key: ${{ secrets.CICD_SSH_KEY }}
-	        port: 22
+          port: 22
           script: |
             rm -rf squiz
             git clone git@github.com:yaraya24/squiz.git
