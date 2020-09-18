@@ -15,8 +15,8 @@ jobs:
 	  python-version: 3.8
       - name: Install dependecies
 	run: |
-	  python -m pip install --upgrade pip # this will install pip3 because the action only installs python
-	  if [ -f requirements.txt]; then pip install -r requirements.txt; fi #this will only run if requirements.txt exists, it's a bash command for if
+	  python -m pip install --upgrade pip 
+	  if [ -f requirements.txt]; then pip install -r requirements.txt; fi 
       - name: Run Tests
 	run: |
- 	  python -m unittest discover tests/ # run tests from the tests directory
+ 	  python -m unittest discover tests/ 
