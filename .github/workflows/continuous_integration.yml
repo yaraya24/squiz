@@ -1,4 +1,4 @@
-name: continuous integration
+name: CI/CD
 
 on:
   push:
@@ -22,3 +22,20 @@ jobs:
         run: |
           python -m unittest discover tests/
 
+  deployment: 
+    needs: test_suite # this job cannot run unless test_suite, the previous job, is done and passes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fresh Clone & Repo Install
+        uses: appleboy/ssh-action@master
+        with: 
+          host: 54.204.119.138
+          username: github-actions
+          key: ${{ secrets.CICD_SSH_KEY }}
+	  port: 22
+          script: |
+            rm -rf squiz
+	    git clone git@github.com:yaraya24/squiz.git
+	    python3.8 -m venv /home/github-action/squiz/venv
+	    source /home/github-action/squiz/venv/bin/activate
+	    pip install -r /home/github-action/squiz/requirements.txt
