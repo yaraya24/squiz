@@ -2,38 +2,38 @@ name: CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master ] # specifies that it only deploys when pushing to the master
 
 jobs:
-  test_suite:
-    runs-on: ubuntu-latest
+  test_suite: # name of the job
+    runs-on: ubuntu-latest # what VM would you like github actions to use 
     steps:
-      - name: Checkout Branch
-        uses: actions/checkout@v2
-      - name: Set Up Python 3.8
-        uses: actions/setup-python@v2
+      - name: Checkout Branch # just a name for the action withing the job
+        uses: actions/checkout@v2 # some thing someone created that allows you to checkout
+      - name: Set Up Python 3.8 # another action
+        uses: actions/setup-python@v2 # inbuilt feature that will install python3 within the VM doing the testing
         with:
           python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
+      - name: Install dependencies # another action within test_stuite job
+        run: | # this will install the dependencies for the python installed above, bash scripting if to use requirements.txt if available
+          python -m pip install --upgrade pip 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run Tests
-        run: |
+        run: | #this will run the test within tests directory
           python -m unittest discover tests/
 
-  deployment: 
+  deployment: # Another job which will deploy the application onto a server, vm, whatever.
     needs: test_suite # this job cannot run unless test_suite, the previous job, is done and passes
     runs-on: ubuntu-latest
     steps:
-      - name: Fresh Clone & Repo Install
-        uses: appleboy/ssh-action@master
+      - name: Fresh Clone & Repo Install #name of the action
+        uses: appleboy/ssh-action@master # function that will use ssh to connect to a vm and clone the program automatically
         with: 
-          host: 54.204.119.138
-          username: github-action
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          script: |
+          host: 54.204.119.138 # the ip address to connect to the vm
+          username: github-action # username to be used in username@ip_address for ssh connections
+          key: ${{ secrets.SSH_KEY }} # .SSH_KEY is the variable that the private key is saved within github
+          port: 22 #port 22 is the port for ssh
+          script: | # once connected, run these following commands. Note: python, pip, venv were all installeed and updated within the vm manually
             rm -rf squiz
             git clone https://github.com/yaraya24/squiz.git
             python3.8 -m venv /home/github-action/squiz/venv
